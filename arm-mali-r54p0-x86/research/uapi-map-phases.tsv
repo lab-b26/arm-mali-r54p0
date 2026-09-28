@@ -1,0 +1,57 @@
+0x00	1 (pre-context)	KBASE_IOCTL_VERSION_CHECK_RESERVED	0xc0048000	3	4	4	csf/mali_kbase_csf_ioctl.h	153
+0x01	1 (pre-context)	KBASE_IOCTL_SET_FLAGS	0x40048001	1	4	4	mali_kbase_ioctl.h	45
+0x03	1 (pre-context)	KBASE_IOCTL_GET_GPUPROPS	0x40108003	1	16	16	mali_kbase_ioctl.h	79
+0x34	1 (pre-context)	KBASE_IOCTL_VERSION_CHECK	0xc0048034	3	4	4	csf/mali_kbase_csf_ioctl.h	624
+0x38	1 (pre-context)	KBASE_IOCTL_KINSTR_PRFCNT_ENUM_INFO	0xc0108038	3	16	16	mali_kbase_ioctl.h	572
+0x39	1 (pre-context)	KBASE_IOCTL_KINSTR_PRFCNT_SETUP	0xc0108039	3	16	16	mali_kbase_ioctl.h	601
+0x05	2 (needs kctx)	KBASE_IOCTL_MEM_ALLOC	0xc0208005	3	32	32	mali_kbase_ioctl.h	105
+0x06	2 (needs kctx)	KBASE_IOCTL_MEM_QUERY	0xc0108006	3	16	16	mali_kbase_ioctl.h	127
+0x07	2 (needs kctx)	KBASE_IOCTL_MEM_FREE	0x40088007	1	8	8	mali_kbase_ioctl.h	141
+0x0c	2 (needs kctx)	KBASE_IOCTL_DISJOINT_QUERY	0x8004800c	2	4	4	mali_kbase_ioctl.h	186
+0x0d	2 (needs kctx)	KBASE_IOCTL_GET_DDK_VERSION	0x4010800d	1	16	16	mali_kbase_ioctl.h	207
+0x0e	2 (needs kctx)	KBASE_IOCTL_MEM_JIT_INIT	0x4018800e	1	24	24	mali_kbase_ioctl.h	232
+0x0f	2 (needs kctx)	KBASE_IOCTL_MEM_SYNC	0x4020800f	1	32	32	mali_kbase_ioctl.h	252
+0x10	2 (needs kctx)	KBASE_IOCTL_MEM_FIND_CPU_OFFSET	0xc0188010	3	24	24	mali_kbase_ioctl.h	275
+0x11	2 (needs kctx)	KBASE_IOCTL_GET_CONTEXT_ID	0x80048011	2	4	4	mali_kbase_ioctl.h	287
+0x12	2 (needs kctx)	KBASE_IOCTL_TLSTREAM_ACQUIRE	0x40048012	1	4	4	mali_kbase_ioctl.h	300
+0x13	2 (needs kctx)	KBASE_IOCTL_TLSTREAM_FLUSH	0x00008013	0	0	0	mali_kbase_ioctl.h	302
+0x14	2 (needs kctx)	KBASE_IOCTL_MEM_COMMIT	0x40108014	1	16	16	mali_kbase_ioctl.h	319
+0x15	2 (needs kctx)	KBASE_IOCTL_MEM_ALIAS	0xc0208015	3	32	32	mali_kbase_ioctl.h	347
+0x16	2 (needs kctx)	KBASE_IOCTL_MEM_IMPORT	0xc0188016	3	24	24	mali_kbase_ioctl.h	375
+0x17	2 (needs kctx)	KBASE_IOCTL_MEM_FLAGS_CHANGE	0x40188017	1	24	24	mali_kbase_ioctl.h	389
+0x18	2 (needs kctx)	KBASE_IOCTL_STREAM_CREATE	0x40208018	1	32	32	mali_kbase_ioctl.h	406
+0x19	2 (needs kctx)	KBASE_IOCTL_FENCE_VALIDATE	0x40048019	1	4	4	mali_kbase_ioctl.h	416
+0x1b	2 (needs kctx)	KBASE_IOCTL_MEM_PROFILE_ADD	0x4010801b	1	16	16	mali_kbase_ioctl.h	432
+0x1d	2 (needs kctx)	KBASE_IOCTL_STICKY_RESOURCE_MAP	0x4010801d	1	16	16	mali_kbase_ioctl.h	444
+0x1e	2 (needs kctx)	KBASE_IOCTL_STICKY_RESOURCE_UNMAP	0x4010801e	1	16	16	mali_kbase_ioctl.h	458
+0x1f	2 (needs kctx)	KBASE_IOCTL_MEM_FIND_GPU_START_AND_OFFSET	0xc010801f	3	16	16	mali_kbase_ioctl.h	486
+0x20	2 (needs kctx)	KBASE_IOCTL_HWCNT_SET	0x40108020	1	16	16	mali_kbase_ioctl.h	176
+0x24	2 (needs kctx)	KBASE_IOCTL_CS_QUEUE_REGISTER	0x40108024	1	16	16	csf/mali_kbase_csf_ioctl.h	175
+0x25	2 (needs kctx)	KBASE_IOCTL_CS_QUEUE_KICK	0x40088025	1	8	8	csf/mali_kbase_csf_ioctl.h	188
+0x26	2 (needs kctx)	KBASE_IOCTL_MEM_EXEC_INIT	0x40088026	1	8	8	mali_kbase_ioctl.h	498
+0x27	2 (needs kctx)	KBASE_IOCTL_CS_QUEUE_BIND	0xc0108027	3	16	16	csf/mali_kbase_csf_ioctl.h	214
+0x28	2 (needs kctx)	KBASE_IOCTL_CS_QUEUE_REGISTER_EX	0x40288028	1	40	40	csf/mali_kbase_csf_ioctl.h	250
+0x29	2 (needs kctx)	KBASE_IOCTL_CS_QUEUE_TERMINATE	0x40088029	1	8	8	csf/mali_kbase_csf_ioctl.h	262
+0x2a	2 (needs kctx)	KBASE_IOCTL_CS_QUEUE_GROUP_CREATE_1_6	0xc020802a	3	32	32	csf/mali_kbase_csf_ioctl.h	306
+0x2b	2 (needs kctx)	KBASE_IOCTL_CS_QUEUE_GROUP_TERMINATE	0x4008802b	1	8	8	csf/mali_kbase_csf_ioctl.h	434
+0x2c	2 (needs kctx)	KBASE_IOCTL_CS_EVENT_SIGNAL	0x0000802c	0	0	0	csf/mali_kbase_csf_ioctl.h	437
+0x2d	2 (needs kctx)	KBASE_IOCTL_KCPU_QUEUE_CREATE	0x8008802d	2	8	8	csf/mali_kbase_csf_ioctl.h	452
+0x2e	2 (needs kctx)	KBASE_IOCTL_KCPU_QUEUE_DELETE	0x4008802e	1	8	8	csf/mali_kbase_csf_ioctl.h	465
+0x2f	2 (needs kctx)	KBASE_IOCTL_KCPU_QUEUE_ENQUEUE	0x4010802f	1	16	16	csf/mali_kbase_csf_ioctl.h	483
+0x30	2 (needs kctx)	KBASE_IOCTL_CS_TILER_HEAP_INIT	0xc0188030	3	24	24	csf/mali_kbase_csf_ioctl.h	521
+0x30	2 (needs kctx)	KBASE_IOCTL_CS_TILER_HEAP_INIT_1_13	0xc0108030	3	16	16	csf/mali_kbase_csf_ioctl.h	558
+0x31	2 (needs kctx)	KBASE_IOCTL_CS_TILER_HEAP_TERM	0x40088031	1	8	8	csf/mali_kbase_csf_ioctl.h	571
+0x32	2 (needs kctx)	KBASE_IOCTL_GET_CPU_GPU_TIMEINFO	0xc0208032	3	32	32	mali_kbase_ioctl.h	527
+0x33	2 (needs kctx)	KBASE_IOCTL_CS_GET_GLB_IFACE	0xc0188033	3	24	24	csf/mali_kbase_csf_ioctl.h	617
+0x35	2 (needs kctx)	KBASE_IOCTL_CS_CPU_QUEUE_DUMP	0x40108035	1	16	16	csf/mali_kbase_csf_ioctl.h	626
+0x36	2 (needs kctx)	KBASE_IOCTL_CONTEXT_PRIORITY_CHECK	0xc0018036	3	1	1	mali_kbase_ioctl.h	539
+0x37	2 (needs kctx)	KBASE_IOCTL_SET_LIMITED_CORE_COUNT	0x40018037	1	1	1	mali_kbase_ioctl.h	551
+0x3a	2 (needs kctx)	KBASE_IOCTL_CS_QUEUE_GROUP_CREATE_1_18	0xc028803a	3	40	40	csf/mali_kbase_csf_ioctl.h	356
+0x3a	2 (needs kctx)	KBASE_IOCTL_CS_QUEUE_GROUP_CREATE_1_35	0xc070803a	3	112	112	csf/mali_kbase_csf_ioctl.h	420
+0x3b	2 (needs kctx)	KBASE_IOCTL_MEM_ALLOC_EX	0xc040803b	3	64	64	csf/mali_kbase_csf_ioctl.h	658
+0x3c	2 (needs kctx)	KBASE_IOCTL_READ_USER_PAGE	0xc008803c	3	8	8	csf/mali_kbase_csf_ioctl.h	681
+0x3d	2 (needs kctx)	KBASE_IOCTL_QUEUE_GROUP_CLEAR_FAULTS	0x4010803d	1	16	16	csf/mali_kbase_csf_ioctl.h	696
+0x3e	2 (needs kctx)	KBASE_IOCTL_CS_TILER_HEAP_SIZE	0xc010803e	3	16	16	csf/mali_kbase_csf_ioctl.h	717
+0x3f	2 (needs kctx)	KBASE_IOCTL_CS_QUEUE_GROUP_CREATE	0xc078803f	3	120	120	csf/mali_kbase_csf_ioctl.h	782
+0x00	not built (MALI_UNIT_TEST)	KBASE_IOCTL_TLSTREAM_STATS	0x00000000	0	0	0	mali_kbase_ioctl.h	625
+0x08	other fd (hwcnt reader fops)	KBASE_IOCTL_HWCNT_READER_SETUP	0x40148008	1	20	20	mali_kbase_ioctl.h	161

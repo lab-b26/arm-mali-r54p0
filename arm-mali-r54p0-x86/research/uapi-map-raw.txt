@@ -1,0 +1,263 @@
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:30:#define KBASE_HWCNT_READER_GET_HWVER _IOR(KBASE_HWCNT_READER, 0x00, __u32)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:31:#define KBASE_HWCNT_READER_GET_BUFFER_SIZE _IOR(KBASE_HWCNT_READER, 0x01, __u32)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:32:#define KBASE_HWCNT_READER_DUMP _IOW(KBASE_HWCNT_READER, 0x10, __u32)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:33:#define KBASE_HWCNT_READER_CLEAR _IOW(KBASE_HWCNT_READER, 0x11, __u32)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:35:	_IOC(_IOC_READ, KBASE_HWCNT_READER, 0x20, \
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:36:	     offsetof(struct kbase_hwcnt_reader_metadata, cycles))
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:38:	_IOR(KBASE_HWCNT_READER, 0x20, struct kbase_hwcnt_reader_metadata)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:40:	_IOC(_IOC_WRITE, KBASE_HWCNT_READER, 0x21, \
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:41:	     offsetof(struct kbase_hwcnt_reader_metadata, cycles))
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:43:	_IOW(KBASE_HWCNT_READER, 0x21, struct kbase_hwcnt_reader_metadata)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:44:#define KBASE_HWCNT_READER_SET_INTERVAL _IOW(KBASE_HWCNT_READER, 0x30, __u32)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:45:#define KBASE_HWCNT_READER_ENABLE_EVENT _IOW(KBASE_HWCNT_READER, 0x40, __u32)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:46:#define KBASE_HWCNT_READER_DISABLE_EVENT _IOW(KBASE_HWCNT_READER, 0x41, __u32)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:47:#define KBASE_HWCNT_READER_GET_API_VERSION _IOW(KBASE_HWCNT_READER, 0xFF, __u32)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:49:	_IOW(KBASE_HWCNT_READER, 0xFF, struct kbase_hwcnt_reader_api_version)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:52: * struct kbase_hwcnt_reader_metadata_cycles - GPU clock cycles
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:57:struct kbase_hwcnt_reader_metadata_cycles {
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:63: * struct kbase_hwcnt_reader_metadata - hwcnt reader sample buffer metadata
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:69:struct kbase_hwcnt_reader_metadata {
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:73:	struct kbase_hwcnt_reader_metadata_cycles cycles;
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:97: * struct kbase_hwcnt_reader_api_version - hwcnt reader API version
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:101:struct kbase_hwcnt_reader_api_version {
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:497:#define KBASE_IOCTL_KINSTR_PRFCNT_CMD \
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:498:	_IOW(KBASE_KINSTR_PRFCNT_READER, 0x00, struct prfcnt_control_cmd)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:500:#define KBASE_IOCTL_KINSTR_PRFCNT_GET_SAMPLE \
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:501:	_IOR(KBASE_KINSTR_PRFCNT_READER, 0x01, struct prfcnt_sample_access)
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:503:#define KBASE_IOCTL_KINSTR_PRFCNT_PUT_SAMPLE \
+include/uapi/gpu/arm/midgard/mali_kbase_hwcnt_reader.h:504:	_IOW(KBASE_KINSTR_PRFCNT_READER, 0x10, struct prfcnt_sample_access)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:22:#ifndef _UAPI_KBASE_IOCTL_H_
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:23:#define _UAPI_KBASE_IOCTL_H_
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:34:#define KBASE_IOCTL_TYPE 0x80
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:37: * struct kbase_ioctl_set_flags - Set kernel context creation flags
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:41:struct kbase_ioctl_set_flags {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:45:#define KBASE_IOCTL_SET_FLAGS _IOW(KBASE_IOCTL_TYPE, 1, struct kbase_ioctl_set_flags)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:48: * struct kbase_ioctl_get_gpuprops - Read GPU properties from the kernel
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:73:struct kbase_ioctl_get_gpuprops {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:79:#define KBASE_IOCTL_GET_GPUPROPS _IOW(KBASE_IOCTL_TYPE, 3, struct kbase_ioctl_get_gpuprops)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:105:#define KBASE_IOCTL_MEM_ALLOC _IOWR(KBASE_IOCTL_TYPE, 5, union kbase_ioctl_mem_alloc)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:108: * struct kbase_ioctl_mem_query - Query properties of a GPU memory region
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:127:#define KBASE_IOCTL_MEM_QUERY _IOWR(KBASE_IOCTL_TYPE, 6, union kbase_ioctl_mem_query)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:134: * struct kbase_ioctl_mem_free - Free a memory region
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:137:struct kbase_ioctl_mem_free {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:141:#define KBASE_IOCTL_MEM_FREE _IOW(KBASE_IOCTL_TYPE, 7, struct kbase_ioctl_mem_free)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:144: * struct kbase_ioctl_hwcnt_reader_setup - Setup HWC dumper/reader
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:153:struct kbase_ioctl_hwcnt_reader_setup {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:161:#define KBASE_IOCTL_HWCNT_READER_SETUP \
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:162:	_IOW(KBASE_IOCTL_TYPE, 8, struct kbase_ioctl_hwcnt_reader_setup)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:165: * struct kbase_ioctl_hwcnt_values - Values to set dummy the dummy counters to.
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:170:struct kbase_ioctl_hwcnt_values {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:176:#define KBASE_IOCTL_HWCNT_SET _IOW(KBASE_IOCTL_TYPE, 32, struct kbase_ioctl_hwcnt_values)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:179: * struct kbase_ioctl_disjoint_query - Query the disjoint counter
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:182:struct kbase_ioctl_disjoint_query {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:186:#define KBASE_IOCTL_DISJOINT_QUERY _IOR(KBASE_IOCTL_TYPE, 12, struct kbase_ioctl_disjoint_query)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:189: * struct kbase_ioctl_get_ddk_version - Query the kernel version
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:201:struct kbase_ioctl_get_ddk_version {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:207:#define KBASE_IOCTL_GET_DDK_VERSION _IOW(KBASE_IOCTL_TYPE, 13, struct kbase_ioctl_get_ddk_version)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:210: * struct kbase_ioctl_mem_jit_init - Initialize the just-in-time memory
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:223:struct kbase_ioctl_mem_jit_init {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:232:#define KBASE_IOCTL_MEM_JIT_INIT _IOW(KBASE_IOCTL_TYPE, 14, struct kbase_ioctl_mem_jit_init)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:235: * struct kbase_ioctl_mem_sync - Perform CPU cache maintenance on GPU memory
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:244:struct kbase_ioctl_mem_sync {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:252:#define KBASE_IOCTL_MEM_SYNC _IOW(KBASE_IOCTL_TYPE, 15, struct kbase_ioctl_mem_sync)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:275:#define KBASE_IOCTL_MEM_FIND_CPU_OFFSET \
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:276:	_IOWR(KBASE_IOCTL_TYPE, 16, union kbase_ioctl_mem_find_cpu_offset)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:279: * struct kbase_ioctl_get_context_id - Get the kernel context ID
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:283:struct kbase_ioctl_get_context_id {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:287:#define KBASE_IOCTL_GET_CONTEXT_ID _IOR(KBASE_IOCTL_TYPE, 17, struct kbase_ioctl_get_context_id)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:290: * struct kbase_ioctl_tlstream_acquire - Acquire a tlstream fd
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:296:struct kbase_ioctl_tlstream_acquire {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:300:#define KBASE_IOCTL_TLSTREAM_ACQUIRE _IOW(KBASE_IOCTL_TYPE, 18, struct kbase_ioctl_tlstream_acquire)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:302:#define KBASE_IOCTL_TLSTREAM_FLUSH _IO(KBASE_IOCTL_TYPE, 19)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:305: * struct kbase_ioctl_mem_commit - Change the amount of memory backing a region
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:314:struct kbase_ioctl_mem_commit {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:319:#define KBASE_IOCTL_MEM_COMMIT _IOW(KBASE_IOCTL_TYPE, 20, struct kbase_ioctl_mem_commit)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:327: * @in.aliasing_info: Pointer to an array of struct base_mem_aliasing_info
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:347:#define KBASE_IOCTL_MEM_ALIAS _IOWR(KBASE_IOCTL_TYPE, 21, union kbase_ioctl_mem_alias)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:375:#define KBASE_IOCTL_MEM_IMPORT _IOWR(KBASE_IOCTL_TYPE, 22, union kbase_ioctl_mem_import)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:378: * struct kbase_ioctl_mem_flags_change - Change the flags for a memory region
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:383:struct kbase_ioctl_mem_flags_change {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:389:#define KBASE_IOCTL_MEM_FLAGS_CHANGE _IOW(KBASE_IOCTL_TYPE, 23, struct kbase_ioctl_mem_flags_change)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:392: * struct kbase_ioctl_stream_create - Create a synchronisation stream
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:402:struct kbase_ioctl_stream_create {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:406:#define KBASE_IOCTL_STREAM_CREATE _IOW(KBASE_IOCTL_TYPE, 24, struct kbase_ioctl_stream_create)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:409: * struct kbase_ioctl_fence_validate - Validate a fd refers to a fence
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:412:struct kbase_ioctl_fence_validate {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:416:#define KBASE_IOCTL_FENCE_VALIDATE _IOW(KBASE_IOCTL_TYPE, 25, struct kbase_ioctl_fence_validate)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:419: * struct kbase_ioctl_mem_profile_add - Provide profiling information to kernel
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:426:struct kbase_ioctl_mem_profile_add {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:432:#define KBASE_IOCTL_MEM_PROFILE_ADD _IOW(KBASE_IOCTL_TYPE, 27, struct kbase_ioctl_mem_profile_add)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:435: * struct kbase_ioctl_sticky_resource_map - Permanently map an external resource
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:439:struct kbase_ioctl_sticky_resource_map {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:444:#define KBASE_IOCTL_STICKY_RESOURCE_MAP \
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:445:	_IOW(KBASE_IOCTL_TYPE, 29, struct kbase_ioctl_sticky_resource_map)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:448: * struct kbase_ioctl_sticky_resource_unmap - Unmap a resource mapped which was
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:453:struct kbase_ioctl_sticky_resource_unmap {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:458:#define KBASE_IOCTL_STICKY_RESOURCE_UNMAP \
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:459:	_IOW(KBASE_IOCTL_TYPE, 30, struct kbase_ioctl_sticky_resource_unmap)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:486:#define KBASE_IOCTL_MEM_FIND_GPU_START_AND_OFFSET \
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:487:	_IOWR(KBASE_IOCTL_TYPE, 31, union kbase_ioctl_mem_find_gpu_start_and_offset)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:490: * struct kbase_ioctl_mem_exec_init - Initialise the EXEC_VA memory zone
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:494:struct kbase_ioctl_mem_exec_init {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:498:#define KBASE_IOCTL_MEM_EXEC_INIT _IOW(KBASE_IOCTL_TYPE, 38, struct kbase_ioctl_mem_exec_init)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:527:#define KBASE_IOCTL_GET_CPU_GPU_TIMEINFO \
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:528:	_IOWR(KBASE_IOCTL_TYPE, 50, union kbase_ioctl_get_cpu_gpu_timeinfo)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:531: * struct kbase_ioctl_context_priority_check - Check the max possible priority
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:535:struct kbase_ioctl_context_priority_check {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:539:#define KBASE_IOCTL_CONTEXT_PRIORITY_CHECK \
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:540:	_IOWR(KBASE_IOCTL_TYPE, 54, struct kbase_ioctl_context_priority_check)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:543: * struct kbase_ioctl_set_limited_core_count - Set the limited core count.
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:547:struct kbase_ioctl_set_limited_core_count {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:551:#define KBASE_IOCTL_SET_LIMITED_CORE_COUNT \
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:552:	_IOW(KBASE_IOCTL_TYPE, 55, struct kbase_ioctl_set_limited_core_count)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:555: * struct kbase_ioctl_kinstr_prfcnt_enum_info - Enum Performance counter
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:566:struct kbase_ioctl_kinstr_prfcnt_enum_info {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:572:#define KBASE_IOCTL_KINSTR_PRFCNT_ENUM_INFO \
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:573:	_IOWR(KBASE_IOCTL_TYPE, 56, struct kbase_ioctl_kinstr_prfcnt_enum_info)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:576: * struct kbase_ioctl_kinstr_prfcnt_setup - Setup HWC dumper/reader
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:601:#define KBASE_IOCTL_KINSTR_PRFCNT_SETUP \
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:602:	_IOWR(KBASE_IOCTL_TYPE, 57, union kbase_ioctl_kinstr_prfcnt_setup)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:612:#define KBASE_IOCTL_TEST_TYPE (KBASE_IOCTL_TYPE + 1)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:616: * struct kbase_ioctl_tlstream_stats - Read tlstream stats for test purposes
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:620:struct kbase_ioctl_tlstream_stats {
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:625:#define KBASE_IOCTL_TLSTREAM_STATS _IOR(KBASE_IOCTL_TEST_TYPE, 2, struct kbase_ioctl_tlstream_stats)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:630:#define KBASE_IOCTL_EXTRA_TYPE (KBASE_IOCTL_TYPE + 2)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:639: * #define KBASE_IOCTL_MY_IOCTL \
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:640: *         _IOWR(KBASE_IOCTL_EXTRA_TYPE, 0, struct my_ioctl_args)
+include/uapi/gpu/arm/midgard/mali_kbase_ioctl.h:751:#endif /* _UAPI_KBASE_IOCTL_H_ */
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:36: *   returned by KBASE_IOCTL_GET_GPUPROPS
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:87: * - Previous version retained as KBASE_IOCTL_CS_QUEUE_GROUP_CREATE_1_18 for
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:94: * - Remove KBASE_IOCTL_HWCNT_READER_SETUP and KBASE_HWCNT_READER_* ioctls.
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:101: *   BASE_MEM_COHERENT_SYSTEM using KBASE_IOCTL_MEM_FLAGS_CHANGE.
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:134: * - Previous version retained as KBASE_IOCTL_CS_QUEUE_GROUP_CREATE_1_35
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:142: * struct kbase_ioctl_version_check - Check version compatibility between
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:148:struct kbase_ioctl_version_check {
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:153:#define KBASE_IOCTL_VERSION_CHECK_RESERVED \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:154:	_IOWR(KBASE_IOCTL_TYPE, 0, struct kbase_ioctl_version_check)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:157: * struct kbase_ioctl_cs_queue_register - Register a GPU command queue with the
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:168:struct kbase_ioctl_cs_queue_register {
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:175:#define KBASE_IOCTL_CS_QUEUE_REGISTER \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:176:	_IOW(KBASE_IOCTL_TYPE, 36, struct kbase_ioctl_cs_queue_register)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:179: * struct kbase_ioctl_cs_queue_kick - Kick the GPU command queue group scheduler
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:184:struct kbase_ioctl_cs_queue_kick {
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:188:#define KBASE_IOCTL_CS_QUEUE_KICK _IOW(KBASE_IOCTL_TYPE, 37, struct kbase_ioctl_cs_queue_kick)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:214:#define KBASE_IOCTL_CS_QUEUE_BIND _IOWR(KBASE_IOCTL_TYPE, 39, union kbase_ioctl_cs_queue_bind)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:217: * struct kbase_ioctl_cs_queue_register_ex - Register a GPU command queue with the
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:237:struct kbase_ioctl_cs_queue_register_ex {
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:250:#define KBASE_IOCTL_CS_QUEUE_REGISTER_EX \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:251:	_IOW(KBASE_IOCTL_TYPE, 40, struct kbase_ioctl_cs_queue_register_ex)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:254: * struct kbase_ioctl_cs_queue_terminate - Terminate a GPU command queue
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:258:struct kbase_ioctl_cs_queue_terminate {
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:262:#define KBASE_IOCTL_CS_QUEUE_TERMINATE \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:263:	_IOW(KBASE_IOCTL_TYPE, 41, struct kbase_ioctl_cs_queue_terminate)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:306:#define KBASE_IOCTL_CS_QUEUE_GROUP_CREATE_1_6 \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:307:	_IOWR(KBASE_IOCTL_TYPE, 42, union kbase_ioctl_cs_queue_group_create_1_6)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:356:#define KBASE_IOCTL_CS_QUEUE_GROUP_CREATE_1_18 \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:357:	_IOWR(KBASE_IOCTL_TYPE, 58, union kbase_ioctl_cs_queue_group_create_1_18)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:420:#define KBASE_IOCTL_CS_QUEUE_GROUP_CREATE_1_35 \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:421:	_IOWR(KBASE_IOCTL_TYPE, 58, union kbase_ioctl_cs_queue_group_create_1_35)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:424: * struct kbase_ioctl_cs_queue_group_term - Terminate a GPU command queue group
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:429:struct kbase_ioctl_cs_queue_group_term {
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:434:#define KBASE_IOCTL_CS_QUEUE_GROUP_TERMINATE \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:435:	_IOW(KBASE_IOCTL_TYPE, 43, struct kbase_ioctl_cs_queue_group_term)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:437:#define KBASE_IOCTL_CS_EVENT_SIGNAL _IO(KBASE_IOCTL_TYPE, 44)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:442: * struct kbase_ioctl_kcpu_queue_new - Create a KCPU command queue
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:447:struct kbase_ioctl_kcpu_queue_new {
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:452:#define KBASE_IOCTL_KCPU_QUEUE_CREATE _IOR(KBASE_IOCTL_TYPE, 45, struct kbase_ioctl_kcpu_queue_new)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:455: * struct kbase_ioctl_kcpu_queue_delete - Destroy a KCPU command queue
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:460:struct kbase_ioctl_kcpu_queue_delete {
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:465:#define KBASE_IOCTL_KCPU_QUEUE_DELETE \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:466:	_IOW(KBASE_IOCTL_TYPE, 46, struct kbase_ioctl_kcpu_queue_delete)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:469: * struct kbase_ioctl_kcpu_queue_enqueue - Enqueue commands into the KCPU queue
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:471: * @addr: Memory address of an array of struct base_kcpu_queue_command
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:473: * @id: kcpu queue identifier, returned by KBASE_IOCTL_KCPU_QUEUE_CREATE ioctl
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:476:struct kbase_ioctl_kcpu_queue_enqueue {
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:483:#define KBASE_IOCTL_KCPU_QUEUE_ENQUEUE \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:484:	_IOW(KBASE_IOCTL_TYPE, 47, struct kbase_ioctl_kcpu_queue_enqueue)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:521:#define KBASE_IOCTL_CS_TILER_HEAP_INIT \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:522:	_IOWR(KBASE_IOCTL_TYPE, 48, union kbase_ioctl_cs_tiler_heap_init)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:558:#define KBASE_IOCTL_CS_TILER_HEAP_INIT_1_13 \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:559:	_IOWR(KBASE_IOCTL_TYPE, 48, union kbase_ioctl_cs_tiler_heap_init_1_13)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:562: * struct kbase_ioctl_cs_tiler_heap_term - Terminate a chunked tiler heap
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:567:struct kbase_ioctl_cs_tiler_heap_term {
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:571:#define KBASE_IOCTL_CS_TILER_HEAP_TERM \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:572:	_IOW(KBASE_IOCTL_TYPE, 49, struct kbase_ioctl_cs_tiler_heap_term)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:617:#define KBASE_IOCTL_CS_GET_GLB_IFACE _IOWR(KBASE_IOCTL_TYPE, 51, union kbase_ioctl_cs_get_glb_iface)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:619:struct kbase_ioctl_cs_cpu_queue_info {
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:624:#define KBASE_IOCTL_VERSION_CHECK _IOWR(KBASE_IOCTL_TYPE, 52, struct kbase_ioctl_version_check)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:626:#define KBASE_IOCTL_CS_CPU_QUEUE_DUMP \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:627:	_IOW(KBASE_IOCTL_TYPE, 53, struct kbase_ioctl_cs_cpu_queue_info)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:658:#define KBASE_IOCTL_MEM_ALLOC_EX _IOWR(KBASE_IOCTL_TYPE, 59, union kbase_ioctl_mem_alloc_ex)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:681:#define KBASE_IOCTL_READ_USER_PAGE _IOWR(KBASE_IOCTL_TYPE, 60, union kbase_ioctl_read_user_page)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:684: * struct kbase_ioctl_queue_group_clear_faults - Re-enable CS FAULT reporting for the GPU queues
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:690:struct kbase_ioctl_queue_group_clear_faults {
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:696:#define KBASE_IOCTL_QUEUE_GROUP_CLEAR_FAULTS \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:697:	_IOW(KBASE_IOCTL_TYPE, 61, struct kbase_ioctl_queue_group_clear_faults)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:717:#define KBASE_IOCTL_CS_TILER_HEAP_SIZE \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:718:	_IOWR(KBASE_IOCTL_TYPE, 62, union kbase_ioctl_cs_tiler_heap_size)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:782:#define KBASE_IOCTL_CS_QUEUE_GROUP_CREATE \
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:783:	_IOWR(KBASE_IOCTL_TYPE, 63, union kbase_ioctl_cs_queue_group_create)
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:794: * struct kbase_ioctl_cs_event_memory_write - Write an event memory address
+include/uapi/gpu/arm/midgard/csf/mali_kbase_csf_ioctl.h:799:struct kbase_ioctl_cs_event_memory_write {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:168:struct base_kcpu_command_fence_info {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:172:struct base_cqs_wait_info {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:178:struct base_kcpu_command_cqs_wait_info {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:184:struct base_cqs_set {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:188:struct base_kcpu_command_cqs_set_info {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:224:struct base_cqs_wait_operation_info {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:233: * struct base_kcpu_command_cqs_wait_operation_info - structure which contains information
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:242:struct base_kcpu_command_cqs_wait_operation_info {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:261:struct base_cqs_set_operation_info {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:270: * struct base_kcpu_command_cqs_set_operation_info - structure which contains information
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:277:struct base_kcpu_command_cqs_set_operation_info {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:284: * struct base_kcpu_command_import_info - structure which contains information
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:289:struct base_kcpu_command_import_info {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:294: * struct base_kcpu_command_jit_alloc_info - structure which contains
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:298: *		struct base_jit_alloc_info type.
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:302:struct base_kcpu_command_jit_alloc_info {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:309: * struct base_kcpu_command_jit_free_info - structure which contains
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:316:struct base_kcpu_command_jit_free_info {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:323: * struct base_kcpu_command_group_suspend_info - structure which contains
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:331:struct base_kcpu_command_group_suspend_info {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:340: * struct base_kcpu_command - kcpu command.
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:357:struct base_kcpu_command {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:361:		struct base_kcpu_command_fence_info fence;
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:362:		struct base_kcpu_command_cqs_wait_info cqs_wait;
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:363:		struct base_kcpu_command_cqs_set_info cqs_set;
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:364:		struct base_kcpu_command_cqs_wait_operation_info cqs_wait_operation;
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:365:		struct base_kcpu_command_cqs_set_operation_info cqs_set_operation;
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:366:		struct base_kcpu_command_import_info import;
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:367:		struct base_kcpu_command_jit_alloc_info jit_alloc;
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:368:		struct base_kcpu_command_jit_free_info jit_free;
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:369:		struct base_kcpu_command_group_suspend_info suspend_buf_copy;
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:401: * struct base_gpu_queue_group_error_fatal_payload - Unrecoverable fault
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:411:struct base_gpu_queue_group_error_fatal_payload {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:418: * struct base_gpu_queue_error_fatal_payload - Unrecoverable fault
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:429:struct base_gpu_queue_error_fatal_payload {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:448: * struct base_gpu_queue_error_fault_payload - Recoverable fault
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:464:struct base_gpu_queue_error_fault_payload {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:502: * struct base_gpu_queue_group_error - Unrecoverable fault information
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:511:struct base_gpu_queue_group_error {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:515:		struct base_gpu_queue_group_error_fatal_payload fatal_group;
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:516:		struct base_gpu_queue_error_fatal_payload fatal_queue;
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:517:		struct base_gpu_queue_error_fault_payload fault_queue;
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:540: * struct base_csf_notification - Event or error notification
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:553:struct base_csf_notification {
+include/uapi/gpu/arm/midgard/csf/mali_base_csf_kernel.h:560:			struct base_gpu_queue_group_error error;
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:120: * struct base_mem_import_user_buffer - Handle of an imported user buffer
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:128:struct base_mem_import_user_buffer {
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:150:/* Maximum size allowed in a single KBASE_IOCTL_MEM_ALLOC call */
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:154: * struct base_fence - Cross-device synchronisation fence.
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:160:struct base_fence {
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:168: * struct base_mem_aliasing_info - Memory aliasing info
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:189:struct base_mem_aliasing_info {
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:205: * struct base_jit_alloc_info - Structure which describes a JIT allocation
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:236:struct base_jit_alloc_info {
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:252:struct base_external_resource {
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:263: * struct base_external_resource_list - Structure which describes a list of
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:269:struct base_external_resource_list {
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:271:	struct base_external_resource ext_res[1];
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:274:struct base_jd_debug_copy_buffer {
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:277:	struct base_external_resource extres;
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:566: * struct base_gpu_props - Return structure for base_get_gpu_props().
+include/uapi/gpu/arm/midgard/mali_base_kernel.h:580:struct base_gpu_props {
