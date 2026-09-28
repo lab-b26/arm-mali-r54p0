@@ -1,6 +1,14 @@
 # External driver input
 downloads/*.tar
 downloads/*.tar.*
+# Signed upstream manifests are re-fetchable external input; their URL, signing
+# key, and validated digest are recorded in research/versions.md instead.
+downloads/*.asc
+downloads/*.sign
+
+# Python bytecode
+__pycache__/
+*.pyc
 
 # Generated build/source trees
 source/*
