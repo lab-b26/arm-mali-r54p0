@@ -1,0 +1,33 @@
+# External driver input
+downloads/*.tar
+downloads/*.tar.*
+
+# Generated build/source trees
+source/*
+!source/README.md
+kernel/*
+rootfs/*
+artifacts/*
+qemu/logs/*
+fuzz/syzkaller/*
+fuzz/corpus/*
+fuzz/programs/*
+fuzz/crashes/*
+work/*
+
+# Runtime logs/state
+logs/*.log
+logs/*.txt
+research/state.log
+
+# Editor/OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Source archives
+*.tar.gz
+*.tar.xz
+*.tgz
+downloads/*.zip

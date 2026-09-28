@@ -1,0 +1,10 @@
+# Research Decisions
+
+Record implementation choices, compatibility decisions, and deviations here. Arm source material is authoritative; local choices must be labeled as such.
+
+| Date | Decision | Reason | Source/authority | Status |
+|---|---|---|---|---|
+| | Linux kernel version is selected at execution time and passed as `KVER`; no kernel version is claimed to be mandated by Arm. | Arm's Device Configuration Guidelines recommend the latest Android Common Kernel or latest stable/LTS kernel for a new virtual environment. | `documents/arm_gpu_bug_bounty_device_configuration_guidelines.pdf` | pending |
+| 2026-09-28 | **D-11: `CONFIG_COMMON_CLK=y` is a non-conforming baseline build-enablement deviation.** | r54p0 x86 baseline contains an unguarded `__clk_is_enabled()` use in `mali_kbase_core_linux.c`; the generic clock framework is required for the module to link. `CONFIG_COMMON_CLK` is not in the Arm Device Configuration Guidelines allow-list. The baseline remains the primary virtual-platform triage environment, but any candidate must be independently revalidated under a DCG-conforming configuration. No seventh Kbase patch is introduced. | Arm Device Configuration Guidelines; r54p0 source/Kbuild; build logs from Run 3 | recorded |
+| 2026-09-28 | **Release-string discrepancy recorded.** | Verified r54p0 archive filename and Kbuild use `r54p0-01eac0`, while the Arm virtual-platform guide's sample dmesg shows `r54p0-00eac0`. Source/Kbuild is used for reproducibility; the source is not modified to match the sample. | Arm Virtual Platform How-To Guide + verified r54p0 archive/Kbuild | recorded |
+| 2026-09-28 | Linux kernel version remains an explicit execution-time choice; the first selected candidate is 6.12.111. | Arm's Device Configuration Guidelines recommend a current stable/LTS or Android Common Kernel for a new virtual environment but do not mandate a specific Linux release. Compatibility with the six r54p0 patches must be tested before treating the candidate as usable. | Arm Device Configuration Guidelines | recorded |
