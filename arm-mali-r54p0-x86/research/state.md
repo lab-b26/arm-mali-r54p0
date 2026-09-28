@@ -5,7 +5,7 @@ OpenCode must update this file **only after the corresponding verification check
 Current state:
 
 ```text
-BASELINE_CONFIG_VALID
+BASELINE_BUILD_OK
 ```
 
 `NOT_STARTED` is repository metadata, not an execution checkpoint. The first verified checkpoint is `PREFLIGHT_OK`.
@@ -21,15 +21,15 @@ BASELINE_CONFIG_VALID
 | 2026-09-28T21:58:08+00:00 | `MALI_INTEGRATED` | `plan.md` 7, 8, 9. r54p0 unpacked to `source/mali-r54p0-unpacked` (441 files); Kbase located at `driver/product/kernel`; `MALI_RELEASE_NAME` = `r54p0-01eac0` (`Kbuild:66`, J-1 honoured). Integrated tree built by fresh `cp -a` of the clean tree (91594 files) then Arm's documented sequence: Kbase copied to `drivers/gpu/arm` (368 files), `obj-$(CONFIG_MALI_MIDGARD) += arm/` appended at `drivers/gpu/Makefile:11`, `source "drivers/gpu/arm/Kconfig"` inserted at `drivers/video/Kconfig:93`. **Both edits verified to occur exactly once.** The clean tree is verifiably untouched. |
 | 2026-09-28T21:59:18+00:00 | `PATCHES_APPLIED` | `plan.md` 10.1, 10.2, for 6.18.54. Sequential preflight on a disposable copy **and** real application: all six Arm x86 patches `exit=0`, **0 `.rej` files, no fuzz, no hunk offsets**; all 10 touched files differed from the clean tree; clean tree still unpatched. Arm patches byte-identical to committed copies. Transcript: `logs/patch-apply.txt` (per deviation from plan §10.2's literal `logs/patch.txt`, which holds the SHA-256s from §5). |
 | 2026-09-28T22:08:56+00:00 | `BASELINE_CONFIG_VALID` | `plan.md` 11. `x86_64_defconfig` → `scripts/config` → `olddefconfig`, output in the transient root per B3. **Audit 10/10** against `.config`: `MALI_MIDGARD=m`, `MALI_CSF_SUPPORT=y`, `MALI_EXPERT=y`, `MALI_NO_MALI=y`, `MALI_REAL_HW=n`, `MALI_DEBUG=n` (present as `# CONFIG_MALI_DEBUG is not set` at line 3484), `MALI_NO_MALI_DEFAULT_GPU="tKRx"`, `MALI_PLATFORM_NAME="vexpress"`, `OF=n`, `COMMON_CLK=y` (D-11). `CONFIG_LARGE_PAGE_SUPPORT=y`, matching Arm's guide note. Snapshot: `logs/config-baseline.txt` (5535 lines). On this kernel `scripts/config -s/--state` prints only `n\|y\|m\|undef`, so string values were read from `.config` directly per `plan.md` 11.4's no-guessing rule. |
-
 | 2026-09-28T22:32:37+00:00 | `KERNEL_SOURCE_READY` | `plan.md` 6.2, **re-attained for `KVER=6.12.111`**. `linux-6.12.111.tar.xz` (148583092 B) from cdn.kernel.org, `xz -t` clean, SHA-256 `9e59dc67…49810`, independent re-download byte-identical, unpacked to an 86642-file clean tree self-reporting `VERSION=6 PATCHLEVEL=12 SUBLEVEL=111`. Authenticity: clearsigned `sha256sums.asc` **VALID** (key `632D3A06589DA6B1`), and the manifest attests exactly the SHA-256 of the bytes in use. Pre-flight confirms `__SetPageMovable`/`__ClearPageMovable` present in `include/linux/migrate.h` (2 and 3 occurrences) — the static reason 6.12.111 was chosen. Verifier hardened to a three-way verdict (0/1/2), 9/9 control matrix. Evidence: `logs/kernel-6.12.111-source.txt`. |
 | 2026-09-28T22:34:06+00:00 | `MALI_INTEGRATED` | `plan.md` 7, 8, 9, **re-run for 6.12.111**. Fresh `cp -a` of the 6.12.111 clean tree (87083 files) then Arm's documented sequence; Kbase copied to `drivers/gpu/arm` (368 files), `obj-$(CONFIG_MALI_MIDGARD) += arm/` at `drivers/gpu/Makefile:10`, `source "drivers/gpu/arm/Kconfig"` at `drivers/video/Kconfig:74`. **Both edits verified to occur exactly once.** `MALI_RELEASE_NAME` = `r54p0-01eac0` (J-1 honoured). Clean tree verifiably untouched. |
 | 2026-09-28T22:34:06+00:00 | `PATCHES_APPLIED` | `plan.md` 10.1, 10.2, **re-run for 6.12.111**. Sequential preflight on a disposable copy **and** real application: all six Arm x86 patches `exit=0`, **0 `.rej` files, no fuzz, no hunk offsets**. Arm patches byte-identical to committed copies. Transcript: `logs/patch-apply-6.12.111.txt`. |
 | 2026-09-28T22:34:06+00:00 | `BASELINE_CONFIG_VALID` | `plan.md` 11, **re-run for 6.12.111**. `x86_64_defconfig` → `scripts/config` → `olddefconfig`. **Audit 10/10** against `.config`: `MALI_MIDGARD=m`, `MALI_CSF_SUPPORT=y`, `MALI_EXPERT=y`, `MALI_NO_MALI=y`, `MALI_REAL_HW=n`, `MALI_DEBUG=n` (`# CONFIG_MALI_DEBUG is not set` at line 3389), `MALI_NO_MALI_DEFAULT_GPU="tKRx"`, `MALI_PLATFORM_NAME="vexpress"`, `OF=n`, `COMMON_CLK=y` (D-11, audited as a non-conforming deviation). `CONFIG_LARGE_PAGE_SUPPORT=y`. Snapshot: `logs/config-baseline-6.12.111.txt` (5438 lines). |
+| 2026-09-28T22:49:22+00:00 | `BASELINE_BUILD_OK` | `plan.md` 12, for `KVER=6.12.111`. `make O=<O> -j4 bzImage modules` **exit 0**, 15m13s, with **0 `error:` and 0 `warning:` lines** in the whole transcript. Verified on **artefacts, not on absence of errors**: `bzImage` (14M) and `vmlinux` (50M) both present, `bzImage is ready (#1)` in the transcript, and `mali_kbase.ko` (2394272 B, ELF 64-bit relocatable x86-64, 5207 defined symbols) present — satisfying plan §12's "do not continue to QEMU unless `mali_kbase.ko` exists". All **129** Kbase translation units compiled, including `mali_kbase_mem_migrate.o` at line 2605 — the exact file that refuted 6.18.54. Release string compiled in as `version=r54p0-01eac0 (UK version 1.36)`, matching `Kbuild` (J-1 honoured, guide's `r54p0-00eac0` sample not adopted). Config **re-audited 10/10** against the exact `.config` that built this kernel, restating D-11 (`CONFIG_COMMON_CLK=y`): baseline is `SUBMISSION_SHAPED_NON_CONFORMING`. Artefacts + `SHA256SUMS` staged in `artifacts/baseline/`. Evidence: `logs/build-baseline-6.12.111.txt`, `logs/build-6.12.111-ok.txt`. |
 
-Nothing beyond `BASELINE_CONFIG_VALID` is verified, for **either** kernel. The 6.18.54 build failed
-outright; the 6.12.111 build is in progress. Initramfs and boot checkpoints remain pending
-throughout.
+`BASELINE_BUILD_OK` **passed** on 6.12.111 (2026-09-28T22:49:22+00:00). The next gate is
+`INITRAMFS_OK` (`plan.md` 13). Nothing about runtime is verified yet: `insmod` success,
+`/dev/mali0`, the Arm dmesg signature, `libGPUCounters`, and QEMU boot are all later checkpoints.
 
 ## Allowed states (ordered)
 
@@ -94,7 +94,7 @@ LTS that still contains `__SetPageMovable` and that sits at/below r54p0's own ne
 | Integration edits | exactly once each | exactly once each (`gpu/Makefile:10`, `video/Kconfig:74`) |
 | Six Arm patches | all clean, in sequence | all clean, in sequence, 0 `.rej` |
 | Config audit | 10/10 | 10/10 |
-| Build | **FAILED** (`__SetPageMovable`) | in progress |
+| Build | **FAILED** (`__SetPageMovable`), aborted at 4th Kbase object | **PASSED** — exit 0, 0 errors, 0 warnings, 129/129 Kbase units, `mali_kbase.ko` produced |
 
 ## Blocking finding at `BASELINE_BUILD_OK` for 6.18.54 (2026-09-28T22:21:29+00:00) — resolved by re-selection
 
@@ -124,20 +124,28 @@ Arm patch edited, no kernel version changed without authorization.
 
 ## Pending inputs
 
-- **`BASELINE_BUILD_OK` for 6.12.111 is in progress** and is the live gate. `6.12.111` remains
-  **untested**; the API-presence pre-flight (`__SetPageMovable` present in
-  `include/linux/migrate.h`) is a static check only and predicts nothing about the build.
-- The 6.18.54 failure showed the build aborts early, so **incompatibilities behind the first error
-  are never enumerated by a single attempt**. A 6.12.111 success must be judged on the artefacts
-  actually produced, never on an absence of errors so far.
-- Per `D-11`, `CONFIG_COMMON_CLK=y` is a non-conforming deviation, audited at
-  `BASELINE_CONFIG_VALID` for both kernels, and must reappear in every baseline audit. Arm's DCG
-  allow-list is `CONFIG_COMPAT`, `CONFIG_ARM64_4K_PAGES`/`CONFIG_ARM64_16K_PAGES`, `CONFIG_KASAN*`,
-  `CONFIG_UBSAN*` only — which independently confirms `CONFIG_COMMON_CLK` is outside it.
-- Arm publishes **no** per-driver kernel matrix ("not publicly documented"), so any KVER is only
-  ever justified by a build actually observed here.
-- The clean tree `linux-6.12.111-clean` stays unpatched; all work is in
-  `linux-6.12.111-integrated` (patched). Build output is transient (B3). The 6.18.54 trees remain in
-  the transient root as evidence; they are regenerable and may be deleted freely.
-- `libelf-dev` is installed (0.190-1.1ubuntu0.1), satisfying the `objtool`/`CONFIG_UNWINDER_ORC`
-  prerequisite. The 6.18.54 failure was unrelated to it.
+- **`INITRAMFS_OK` is the next gate** (`plan.md` 13): a static-BusyBox initramfs carrying
+  `mali_kbase.ko`. `busybox-static` is installed and verified statically linked, and
+  `cpio` is present, so the prerequisite is met.
+- **QEMU must run under TCG, not KVM.** `/dev/kvm` is unreadable and unwritable by this session, so
+  `plan.md` 14's `-accel kvm -cpu host` cannot be used. `plan.md` 14 explicitly sanctions dropping
+  both flags and recording the slower non-accelerated mode; that deviation must be recorded before
+  the QEMU run, not after. Expect TCG boot to be markedly slower than the 4-vCPU KVM baseline in
+  Arm's guide.
+- The 6.18.54 attempt aborted at the 4th of 129 Kbase objects, so **what 6.18.54 would have hit
+  next is still unmeasured** and is not claimed. What is established is narrower and positive: 6.12.111
+  compiles and links all 129 units and modposts `mali_kbase.ko` with 0 errors and 0 warnings.
+- Per `D-11`, `CONFIG_COMMON_CLK=y` is a non-conforming deviation and this baseline is
+  **SUBMISSION_SHAPED_NON_CONFORMING**. It was re-audited against the exact `.config` that produced
+  the build, and must reappear in every baseline audit. Arm's DCG allow-list is `CONFIG_COMPAT`,
+  `CONFIG_ARM64_4K_PAGES`/`CONFIG_ARM64_16K_PAGES`, `CONFIG_KASAN*`, `CONFIG_UBSAN*` only — which
+  independently confirms `CONFIG_COMMON_CLK` is outside it. Any submission candidate needs separate
+  DCG-conforming validation.
+- `CONFIG_MALI_NO_MALI=y` means this is the dummy model. Do **not** describe it as emulating real GPU
+  hardware or firmware, and do not treat dummy-model-only bugs as final bounty findings.
+- Arm publishes **no** per-driver kernel matrix ("not publicly documented"), so 6.12.111 is justified
+  only by the build actually observed here — which is now recorded.
+- The clean tree `linux-6.12.111-clean` stays unpatched; all work is in `linux-6.12.111-integrated`
+  (patched). Build output is transient (B3) but the four artefacts and `SHA256SUMS` are staged in
+  `artifacts/baseline/` as durable evidence. The 6.18.54 trees remain in the transient root as
+  evidence; they are regenerable and may be deleted freely.
