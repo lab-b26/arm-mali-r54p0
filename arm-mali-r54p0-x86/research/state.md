@@ -5,7 +5,7 @@ OpenCode must update this file **only after the corresponding verification check
 Current state:
 
 ```text
-BASELINE_BUILD_OK
+INITRAMFS_OK
 ```
 
 `NOT_STARTED` is repository metadata, not an execution checkpoint. The first verified checkpoint is `PREFLIGHT_OK`.
@@ -26,10 +26,12 @@ BASELINE_BUILD_OK
 | 2026-09-28T22:34:06+00:00 | `PATCHES_APPLIED` | `plan.md` 10.1, 10.2, **re-run for 6.12.111**. Sequential preflight on a disposable copy **and** real application: all six Arm x86 patches `exit=0`, **0 `.rej` files, no fuzz, no hunk offsets**. Arm patches byte-identical to committed copies. Transcript: `logs/patch-apply-6.12.111.txt`. |
 | 2026-09-28T22:34:06+00:00 | `BASELINE_CONFIG_VALID` | `plan.md` 11, **re-run for 6.12.111**. `x86_64_defconfig` → `scripts/config` → `olddefconfig`. **Audit 10/10** against `.config`: `MALI_MIDGARD=m`, `MALI_CSF_SUPPORT=y`, `MALI_EXPERT=y`, `MALI_NO_MALI=y`, `MALI_REAL_HW=n`, `MALI_DEBUG=n` (`# CONFIG_MALI_DEBUG is not set` at line 3389), `MALI_NO_MALI_DEFAULT_GPU="tKRx"`, `MALI_PLATFORM_NAME="vexpress"`, `OF=n`, `COMMON_CLK=y` (D-11, audited as a non-conforming deviation). `CONFIG_LARGE_PAGE_SUPPORT=y`. Snapshot: `logs/config-baseline-6.12.111.txt` (5438 lines). |
 | 2026-09-28T22:49:22+00:00 | `BASELINE_BUILD_OK` | `plan.md` 12, for `KVER=6.12.111`. `make O=<O> -j4 bzImage modules` **exit 0**, 15m13s, with **0 `error:` and 0 `warning:` lines** in the whole transcript. Verified on **artefacts, not on absence of errors**: `bzImage` (14M) and `vmlinux` (50M) both present, `bzImage is ready (#1)` in the transcript, and `mali_kbase.ko` (2394272 B, ELF 64-bit relocatable x86-64, 5207 defined symbols) present — satisfying plan §12's "do not continue to QEMU unless `mali_kbase.ko` exists". All **129** Kbase translation units compiled, including `mali_kbase_mem_migrate.o` at line 2605 — the exact file that refuted 6.18.54. Release string compiled in as `version=r54p0-01eac0 (UK version 1.36)`, matching `Kbuild` (J-1 honoured, guide's `r54p0-00eac0` sample not adopted). Config **re-audited 10/10** against the exact `.config` that built this kernel, restating D-11 (`CONFIG_COMMON_CLK=y`): baseline is `SUBMISSION_SHAPED_NON_CONFORMING`. Artefacts + `SHA256SUMS` staged in `artifacts/baseline/`. Evidence: `logs/build-baseline-6.12.111.txt`, `logs/build-6.12.111-ok.txt`. |
+| 2026-09-28T23:08:36+00:00 | `INITRAMFS_OK` | `plan.md` 13. Static BusyBox initramfs: 16 applet symlinks, `mali_kbase.ko` copied in, `init` mode 0755 and **byte-identical to plan §13's heredoc** (diffed), packed `cpio --null -o --format=newc \| gzip -9` → 1.6M, `gzip -t` OK, 26 entries. Two cross-checks so the initramfs cannot carry a stale module: `mali_kbase.ko` extracted back out of the cpio is byte-identical (`ce3165d2…2996e`) to the one built at `BASELINE_BUILD_OK`, and busybox re-checked after extraction is still statically linked. **Deviation:** `find` added to the applet list — plan §13's init script calls `find` but §13's symlink loop omits it, and the `2>/dev/null \|\| true` guard would have hidden the failure. cpio embeds mtimes, so its SHA-256 identifies this artefact and is not a reproducible-build claim. Host-side well-formedness only; the guest is unproven. Evidence: `logs/initramfs-6.12.111.txt`. |
 
-`BASELINE_BUILD_OK` **passed** on 6.12.111 (2026-09-28T22:49:22+00:00). The next gate is
-`INITRAMFS_OK` (`plan.md` 13). Nothing about runtime is verified yet: `insmod` success,
-`/dev/mali0`, the Arm dmesg signature, `libGPUCounters`, and QEMU boot are all later checkpoints.
+`INITRAMFS_OK` **passed** (2026-09-28T23:08:36+00:00). The next gate is `QEMU_BOOT_OK`
+(`plan.md` 14, 15): boot the kernel under QEMU and confirm the mandatory bring-up checks. Nothing
+about the guest is verified yet — `insmod` success, `/dev/mali0`, the Arm dmesg signature,
+`libGPUCounters`, and Mali device behaviour are all later checkpoints.
 
 ## Allowed states (ordered)
 
@@ -124,14 +126,16 @@ Arm patch edited, no kernel version changed without authorization.
 
 ## Pending inputs
 
-- **`INITRAMFS_OK` is the next gate** (`plan.md` 13): a static-BusyBox initramfs carrying
-  `mali_kbase.ko`. `busybox-static` is installed and verified statically linked, and
-  `cpio` is present, so the prerequisite is met.
+- **`QEMU_BOOT_OK` is the next gate** (`plan.md` 14, 15). `bzImage` and `mali-initramfs.cpio.gz`
+  are staged in `artifacts/baseline/` with recorded SHA-256s, so the guest has everything §13 needs.
 - **QEMU must run under TCG, not KVM.** `/dev/kvm` is unreadable and unwritable by this session, so
   `plan.md` 14's `-accel kvm -cpu host` cannot be used. `plan.md` 14 explicitly sanctions dropping
   both flags and recording the slower non-accelerated mode; that deviation must be recorded before
   the QEMU run, not after. Expect TCG boot to be markedly slower than the 4-vCPU KVM baseline in
-  Arm's guide.
+  Arm's guide, so a generous timeout is required and a slow boot must not be misread as a hang.
+- `plan.md` 14's runner ends in `exec /bin/sh`, so the guest will **not** exit on its own. The run
+  needs either a bounded timeout or a `poweroff` fed on stdin, and a timeout must not be mistaken
+  for a boot failure.
 - The 6.18.54 attempt aborted at the 4th of 129 Kbase objects, so **what 6.18.54 would have hit
   next is still unmeasured** and is not claimed. What is established is narrower and positive: 6.12.111
   compiles and links all 129 units and modposts `mali_kbase.ko` with 0 errors and 0 warnings.
