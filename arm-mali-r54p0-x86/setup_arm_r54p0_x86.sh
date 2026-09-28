@@ -19,6 +19,22 @@ MALI_TARBALL="${MALI_TARBALL:-}"
 PATCH_ZIP="${PATCH_ZIP:-}"
 FORCE_REBUILD="${FORCE_REBUILD:-0}"
 
+# B3 storage separation (recorded in research/decisions.md).
+#
+#   ROOT           persistent project/evidence root. Holds the research ledger,
+#                  Arm source material, logs, hashes, decisions, state, final
+#                  reproducibility artifacts, and the external Arm r54p0
+#                  archive in downloads/.
+#   TRANSIENT_ROOT regenerable build artifacts only. Holds the Linux kernel
+#                  source trees, the kernel build output (O=), temporary
+#                  patch-test copies, and the initramfs staging tree. Nothing
+#                  here is evidence and nothing here survives a rebuild.
+#
+# Keeping these separate is required because the project root may sit on a
+# small filesystem while a full kernel build (plus a second KASAN/KCOV build)
+# does not fit on it.
+TRANSIENT_ROOT="${TRANSIENT_ROOT:-/tmp/arm-mali-r54p0-build}"
+
 EXPECTED_MALI_MD5="3bcd3870b58f83442b16b83e432e2f97"
 EXPECTED_PATCHES=(
   0001-mali-fix-build-error-for-CONFIG_OF-n-for-4.1-kernels.patch
@@ -95,6 +111,12 @@ exec > >(tee -a "$LOG") 2>&1
 log() { printf '\n[+] %s\n' "$*"; }
 fail() { echo "ERROR: $*" >&2; exit 1; }
 
+# The persistent and transient roots must be genuinely separate. Building into
+# the project root is exactly the disk-exhaustion failure this split avoids.
+[[ "$TRANSIENT_ROOT" != "$ROOT" ]] || fail "TRANSIENT_ROOT must differ from ROOT (B3 storage policy)"
+[[ -d "$TRANSIENT_ROOT" ]] || fail "TRANSIENT_ROOT does not exist: $TRANSIENT_ROOT"
+mkdir -p "$TRANSIENT_ROOT"/{downloads,source,work,kernel/baseline,kernel/instrumented,rootfs/baseline,rootfs/instrumented}
+
 log "Preflight"
 {
   echo "date=$(date -Is)"
@@ -120,20 +142,20 @@ sha256sum "$MALI_TARBALL" | tee "$ROOT/logs/mali-source.sha256"
 
 # 2) Validate the six supplied patches without destroying repository copies.
 log "Validating Arm patch bundle"
-rm -rf "$ROOT/work/patches-extracted"
-mkdir -p "$ROOT/work/patches-extracted"
-unzip -q "$PATCH_ZIP" -d "$ROOT/work/patches-extracted"
+rm -rf "$TRANSIENT_ROOT/work/patches-extracted"
+mkdir -p "$TRANSIENT_ROOT/work/patches-extracted"
+unzip -q "$PATCH_ZIP" -d "$TRANSIENT_ROOT/work/patches-extracted"
 
-mapfile -t PATCHES < <(find "$ROOT/work/patches-extracted" -maxdepth 1 -type f -name '*.patch' -printf '%f\n' | sort)
+mapfile -t PATCHES < <(find "$TRANSIENT_ROOT/work/patches-extracted" -maxdepth 1 -type f -name '*.patch' -printf '%f\n' | sort)
 [[ "${#PATCHES[@]}" -eq 6 ]] || fail "Expected exactly 6 patches, found ${#PATCHES[@]}"
 
 for expected in "${EXPECTED_PATCHES[@]}"; do
-  [[ -f "$ROOT/work/patches-extracted/$expected" ]] || fail "Missing expected patch in ZIP: $expected"
+  [[ -f "$TRANSIENT_ROOT/work/patches-extracted/$expected" ]] || fail "Missing expected patch in ZIP: $expected"
 done
 
 mkdir -p "$ROOT/patches/arm-virtual-device"
 for expected in "${EXPECTED_PATCHES[@]}"; do
-  extracted="$ROOT/work/patches-extracted/$expected"
+  extracted="$TRANSIENT_ROOT/work/patches-extracted/$expected"
   tracked="$ROOT/patches/arm-virtual-device/$expected"
   if [[ -f "$tracked" ]]; then
     cmp -s "$extracted" "$tracked" || fail "Tracked patch differs from supplied ZIP: $expected"
@@ -149,18 +171,21 @@ sha256sum "$ROOT/patches/arm-virtual-device"/*.patch | tee "$ROOT/logs/patch-has
 
 # 3) Download/cache selected official Linux source.
 log "Preparing Linux $KVER source"
-KERNEL_ARCHIVE="$ROOT/downloads/linux-${KVER}.tar.xz"
-KERNEL_CLEAN="$ROOT/source/linux-${KVER}-clean"
-KDIR="$ROOT/source/linux-${KVER}-integrated"
+# Kernel source archive, clean tree, integrated tree, and all build output are
+# regenerable: transient root. The selected release, its source URL, and its
+# checksum are recorded persistently in research/versions.md and logs/.
+KERNEL_ARCHIVE="$TRANSIENT_ROOT/downloads/linux-${KVER}.tar.xz"
+KERNEL_CLEAN="$TRANSIENT_ROOT/source/linux-${KVER}-clean"
+KDIR="$TRANSIENT_ROOT/source/linux-${KVER}-integrated"
 
 if [[ ! -f "$KERNEL_ARCHIVE" ]]; then
   curl -L --fail --retry 3 -o "$KERNEL_ARCHIVE" "$KERNEL_URL"
 fi
 
-mkdir -p "$ROOT/source"
+mkdir -p "$ROOT/source" "$TRANSIENT_ROOT/source"
 if [[ ! -d "$KERNEL_CLEAN" ]]; then
   # The archive normally contains linux-${KVER}/.
-  TMP_EXTRACT="$ROOT/work/linux-extract-${KVER}"
+  TMP_EXTRACT="$TRANSIENT_ROOT/work/linux-extract-${KVER}"
   rm -rf "$TMP_EXTRACT"
   mkdir -p "$TMP_EXTRACT"
   tar -xJf "$KERNEL_ARCHIVE" -C "$TMP_EXTRACT"
@@ -199,7 +224,7 @@ sed -i '$i source "drivers/gpu/arm/Kconfig"' drivers/video/Kconfig
 
 # 6) Sequential non-destructive patch preflight.
 log "Sequential dry-run of all six Arm x86 patches"
-DRY="$ROOT/work/patch-dryrun"
+DRY="$TRANSIENT_ROOT/work/patch-dryrun"
 rm -rf "$DRY"
 cp -a "$KDIR" "$DRY"
 (
@@ -226,7 +251,10 @@ log "Applying all six Arm x86 patches"
 
 # 8) Configure x86_64 Simulated Platform Device.
 log "Configuring x86_64 Mali Simulated Platform Device"
-BUILD="$ROOT/kernel/baseline"
+# Kernel build output (O=) is regenerable: transient root. The resulting
+# bzImage/vmlinux/mali_kbase.ko/.config and their checksums are copied to the
+# persistent $ROOT/artifacts/ below.
+BUILD="$TRANSIENT_ROOT/kernel/baseline"
 rm -rf "$BUILD"
 mkdir -p "$BUILD"
 make O="$BUILD" x86_64_defconfig
@@ -318,7 +346,9 @@ sha256sum \
 
 # 11) Minimal initramfs.
 log "Creating BusyBox initramfs"
-RFS="$ROOT/rootfs/baseline"
+# Initramfs staging tree is regenerable: transient root. The packed
+# mali-initramfs.cpio.gz artifact is written to the persistent $ROOT/artifacts/.
+RFS="$TRANSIENT_ROOT/rootfs/baseline"
 rm -rf "$RFS"
 mkdir -p "$RFS"/{bin,dev,etc,proc,sys,tmp}
 BUSYBOX_BIN="$(command -v busybox)"
