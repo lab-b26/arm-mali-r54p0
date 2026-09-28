@@ -10,6 +10,14 @@ downloads/*.sign
 __pycache__/
 *.pyc
 
+# Third-party checkouts cloned at run time (re-fetchable external input).
+# libGPUCounters is Arm's own repo from https://github.com/ARM-software/libGPUCounters.git;
+# its URL, branch and exact HEAD are recorded in research/decisions.md and
+# logs/libgpuCounters-6.12.111.txt. Ignoring the directory is deliberate: committing it
+# as a gitlink would record only a commit SHA and none of its content, and committing
+# its files would vendor someone else's repository into this one.
+fuzz/libGPUCounters/
+
 # Generated build/source trees
 source/*
 !source/README.md
