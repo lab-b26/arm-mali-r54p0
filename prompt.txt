@@ -1,0 +1,10 @@
+Act as an expert Linux kernel security researcher. 
+Generate a valid Syzkaller interface description (Syzlang) based on the C structures and ioctl definitions provided below.
+
+Target Path: /dev/mali0
+Code Context:
+
+Output Requirements:
+- Provide ONLY valid Syzkaller syntax (.txt format).
+- Map structures using Syzkaller primitives.
+- No chat text.
